@@ -1,0 +1,12 @@
+<h1>Poslanie noveho emailu</h1>
+
+
+<form method="get" action="send" id="newEmailForm">
+    {% csrf_token %}
+
+    <input type="text"/>
+    <p></p>
+    <input type="submit" name="odosli"/>
+</form>
+
+<textarea name="template" form="newEmailForm"> text </textarea>
