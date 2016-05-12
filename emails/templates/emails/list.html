@@ -1,0 +1,12 @@
+<h1>email list</h1>
+
+{% if email_list %}
+	<ul>
+		{% for email in email_list %}
+			<li>{{email.subject}}</li>
+		{% endfor %}
+	</ul>
+{% else %}
+	<p>ziadne emaily</p>
+{% endif %}
+
