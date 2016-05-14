@@ -21,3 +21,5 @@ urlpatterns = [
     url(r'^accounts/', include('accounts.urls')),
     url(r'^emails/', include('emails.urls')),
 ]
+
+# handler400 = 'emailsender.views.my400'

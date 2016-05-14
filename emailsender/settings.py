@@ -24,8 +24,9 @@ SECRET_KEY = 'g0i*!5oy5gua=+how6*w8&k=^8*wf2$$$6bww1d^0mg$&3ymby'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+# DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["127.0.0.1"]
 
 
 # Application definition
@@ -56,7 +57,7 @@ ROOT_URLCONF = 'emailsender.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['accounts/templates', 'emails/templates'],
+        'DIRS': ['emailsender/templates', 'accounts/templates', 'emails/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

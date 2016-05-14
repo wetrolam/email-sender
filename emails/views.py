@@ -5,9 +5,13 @@ from django.views import generic
 class NewView(generic.DetailView):
 	model = EmailSource
 	template_name = 'emails/new.html'
+	#queryset = EmailSource.objects.filter(id=1)
 
 	def get_queryset(self):
-		return EmailSource()
+	# def get_object(self):
+		print("volam NewView qet queryset ")
+		return EmailSource.objects.filter(id=2)
+		#return EmailSource()
 
 def send(request):
 	return render(request, 'emails/send.html')
