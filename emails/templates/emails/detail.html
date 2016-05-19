@@ -2,7 +2,10 @@ email detail
 
 <h1>{{object.subject}}</h1>
 
-nieco
+<p>id = {{object.id}}</p>
 
-<h1>{{object.id}}</h1>
-
+<ul>
+    {% for e in view.all_emails %}
+        <li>{{e.subject}}</li>
+    {% endfor %}
+</ul>

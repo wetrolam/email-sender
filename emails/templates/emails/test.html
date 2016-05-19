@@ -1,0 +1,11 @@
+obsah testovacieho view
+
+<p>{{view.udaj}}</p>
+
+<p>{{we}}</p>
+
+<ul>
+    {% for e in view.all_emails %}
+        <li>{{e.subject}}</li>
+    {% endfor %}
+</ul>
