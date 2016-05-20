@@ -1,0 +1,16 @@
+<h1>Poslanie noveho emailu</h1>
+
+<form method="post" action="" id="newEmailForm">
+    {% csrf_token %}
+
+    {{form.as_p}}
+
+    {% comment %}
+    <input type="text" name="subject"/>
+    <p></p>
+    {% endcomment %}
+    <input type="submit" name="odosli"/>
+</form>
+
+
+<!-- <textarea name="template" form="newEmailForm"> text </textarea> -->

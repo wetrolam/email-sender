@@ -3,7 +3,7 @@
 {% if email_list %}
 	<ul>
 		{% for email in email_list %}
-			<li>{{email.subject}}</li>
+			<li><a href="{{email.id}}">{{email.subject}}</a></li>
 		{% endfor %}
 	</ul>
 {% else %}

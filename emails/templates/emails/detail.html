@@ -1,9 +1,15 @@
-email detail
+<p style="background-color:lightgreen"> email detail </p>
 
 <h1>{{object.subject}}</h1>
 
 <p>id = {{object.id}}</p>
 
+<p>subject = {{object.subject}}</p>
+
+<p>template = {{object.template}}</p>
+
+
+<b>vsetky maily</b>
 <ul>
     {% for e in view.all_emails %}
         <li>{{e.subject}}</li>
