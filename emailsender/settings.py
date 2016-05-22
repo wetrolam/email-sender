@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
 import os
+from secret import *
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -26,13 +28,14 @@ SECRET_KEY = 'g0i*!5oy5gua=+how6*w8&k=^8*wf2$$$6bww1d^0mg$&3ymby'
 DEBUG = True
 # DEBUG = False
 
-ALLOWED_HOSTS = ["127.0.0.1"]
+ALLOWED_HOSTS = []
 
 
 # Application definition
 
 INSTALLED_APPS = [
     'emails.apps.EmailsConfig',
+    'anymail',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -123,7 +126,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # email settings
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'aladin.elf.stuba.sk'
-#EMAIL_PORT = 25
+#EMAIL_BACKEND = os.environ['EMAIL_BACKEND']
+#EMAIL_USE_TLS = ast.literal_eval(os.environ['EMAIL_USE_TLS'])
+#EMAIL_HOST = os.environ['EMAIL_HOST']
+#EMAIL_PORT = ast.literal_eval(os.environ('EMAIL_PORT'))
+

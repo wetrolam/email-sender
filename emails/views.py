@@ -28,10 +28,9 @@ class EmailCreateView(generic.edit.CreateView):
 		return super(EmailCreateView, self).form_invalid(form)
 
 	def send_mail(self, form):
-		print("posielam email ------------->>----------")
-		send_mail('Subject here', 'Here is the message.', 'from@example.com',
-				  ['to@example.com'], fail_silently=False)
-
+		receiver = form.instance.specificData
+		print("posielam email ------------->>---------- " + receiver)
+		send_mail('Subject here', 'Here is the message.', 'from@example.com', [receiver], fail_silently=False)
 
 def sent(request):
 	return render(request, 'emails/sent.html')
