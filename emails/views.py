@@ -36,6 +36,7 @@ class EmailCreateView(generic.edit.CreateView):
 		#send_mail('Subject here', 'Here is the message.', 'from@example.com', [receiver], fail_silently=False)
 		form.instance.sentDateTime = datetime.now()
 		form.instance.save()
+		#some problem with push
 
 def sent(request):
 	return render(request, 'emails/sent.html')
