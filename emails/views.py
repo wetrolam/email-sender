@@ -71,6 +71,10 @@ class EmailUpdateView(generic.UpdateView):
 	fields = ['subject', 'template', 'specificData']
 	success_url = '/emails'
 
+class EmailDeleteView(generic.DeleteView):
+	model = EmailSource
+	template_name = 'emails/email_delete.html'
+	success_url = '/emails'
 
 class TestView(generic.TemplateView):
 	template_name = 'emails/test.html'
