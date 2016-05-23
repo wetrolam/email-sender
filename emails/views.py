@@ -65,6 +65,13 @@ class DetailView(generic.DetailView):
 		#context['all_emails'] = EmailSource.objects.all()
 		# return context
 
+class EmailUpdateView(generic.UpdateView):
+	model = EmailSource
+	template_name = 'emails/email_update_form.html'
+	fields = ['subject', 'template', 'specificData']
+	success_url = '/emails'
+
+
 class TestView(generic.TemplateView):
 	template_name = 'emails/test.html'
 	#conext_object_name = 'all_emails'

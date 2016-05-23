@@ -1,9 +1,14 @@
 <h1>email list</h1>
 
+<p></p><a href="new"> vytvor novy </a></p>
+
 {% if email_list %}
 	<ul>
 		{% for email in email_list %}
-			<li><a href="{{email.id}}">{{email.subject}}</a></li>
+			<li>
+				<a href="{{email.id}}">{{email.subject}}</a>
+				<a href="{{email.id}}/edit">(uprav)</a>
+			</li>
 		{% endfor %}
 	</ul>
 {% else %}

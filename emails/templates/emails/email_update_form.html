@@ -1,0 +1,10 @@
+<h1>Uprava emailu</h1>
+
+<form method="post" action="" id="updateEmailForm">
+    {% csrf_token %}
+
+    {{form.as_p}}
+
+    <input type="submit" value="uprav"/>
+</form>
+
