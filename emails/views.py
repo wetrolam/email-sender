@@ -6,6 +6,7 @@ from django.db.models import Q
 import logging
 from django.core.urlresolvers import reverse_lazy
 from django.core.mail import send_mail
+from datetime import datetime
 
 logger = logging.getLogger(__name__)
 
@@ -19,8 +20,10 @@ class EmailCreateView(generic.edit.CreateView):
 		logging.debug("email vytvoreny")
 		print("email vytvoreny")
 		form.instance.user = self.request.user
-		self.send_mail(form)
-		return super(EmailCreateView, self).form_valid(form)
+		result = super(EmailCreateView, self).form_valid(form)
+		if 'saveAndSendNow' in self.request.POST:
+			self.send_mail(form)
+		return result
 
 	def form_invalid(self, form):
 		logging.debug("email chybne definovany")
@@ -30,7 +33,9 @@ class EmailCreateView(generic.edit.CreateView):
 	def send_mail(self, form):
 		receiver = form.instance.specificData
 		print("posielam email ------------->>---------- " + receiver)
-		send_mail('Subject here', 'Here is the message.', 'from@example.com', [receiver], fail_silently=False)
+		#send_mail('Subject here', 'Here is the message.', 'from@example.com', [receiver], fail_silently=False)
+		form.instance.sentDateTime = datetime.now()
+		form.instance.save()
 
 def sent(request):
 	return render(request, 'emails/sent.html')

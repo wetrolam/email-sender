@@ -7,8 +7,12 @@
 		{% for email in email_list %}
 			<li>
 				<a href="{{email.id}}">{{email.subject}}</a>
-				<a href="{{email.id}}/edit">(uprav)</a>
-				<a href="{{email.id}}/delete">(vymaz)</a>
+				{% if email.sentDateTime %}
+					sent: {{email.sentDateTime}}
+				{% else %}
+					<a href="{{email.id}}/edit">(uprav)</a>
+					<a href="{{email.id}}/delete">(vymaz)</a>
+				{% endif %}
 			</li>
 		{% endfor %}
 	</ul>

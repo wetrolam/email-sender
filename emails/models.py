@@ -8,6 +8,7 @@ class EmailSource(models.Model):
 	subject = models.CharField(max_length=200)
 	template = models.TextField()
 	specificData = models.TextField()
+	sentDateTime = models.DateTimeField(null=True, blank=True) #http://stackoverflow.com/questions/11351619/how-to-make-djangos-datetimefield-optional
 
 	# def get_absolute_url(self):
 	# 	return reverse('email-detail', kwargs={'pk': self.pk})
