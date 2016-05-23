@@ -1,0 +1,16 @@
+# pip-tools is used (https://github.com/nvie/pip-tools)
+
+# Install
+# pip install --upgrade pip==8.1.1  (because pip version 8.1.2 didn't work)
+# pip install pip-tools
+
+# write requirements into "requirements.in"
+
+# requirements.in -> requirements.txt
+# pip-compile requirements.in
+
+# update virtualenv to reflect requirements.txt (it will install, upgrade, uninstall everything needed)
+# pip-sync
+
+Django
+django-anymail
