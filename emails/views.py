@@ -6,7 +6,7 @@ from django.db.models import Q
 import logging
 from django.core.urlresolvers import reverse_lazy
 from django.core.mail import send_mail
-from datetime import datetime
+from .EmailManager import *
 
 logger = logging.getLogger(__name__)
 
@@ -22,20 +22,8 @@ class EmailCreateView(generic.edit.CreateView):
 		form.instance.user = self.request.user
 		result = super(EmailCreateView, self).form_valid(form)
 		if 'saveAndSendNow' in self.request.POST:
-			self.send_mail(form)
+			sendEmail(form.instance)
 		return result
-
-	def form_invalid(self, form):
-		logging.debug("email chybne definovany")
-		print("email chybne definovany")
-		return super(EmailCreateView, self).form_invalid(form)
-
-	def send_mail(self, form):
-		receiver = form.instance.specificData
-		print("posielam email ------------->>---------- " + receiver)
-		#send_mail('Subject here', 'Here is the message.', 'from@example.com', [receiver], fail_silently=False)
-		form.instance.sentDateTime = datetime.now()
-		form.instance.save()
 
 def sent(request):
 	return render(request, 'emails/sent.html')
@@ -76,17 +64,17 @@ class EmailUpdateView(generic.UpdateView):
 	fields = ['subject', 'template', 'specificData']
 	success_url = '/emails'
 
+	def form_valid(self, form):
+		result = super(EmailUpdateView, self).form_valid(form)
+		if 'saveAndSendNow' in self.request.POST:
+			sendEmail(form.instance)
+		return result
+
 class EmailDuplicateView(generic.UpdateView):
 	model = EmailSource
 	template_name = 'emails/email_duplicate.html'
 	fields = ['subject', 'template', 'specificData']
 	success_url = '/emails'
-
-	def send_mail(self, emailSource):
-		receiver = emailSource.specificData
-		print("posielam email ------------->>---------- " + receiver)
-		emailSource.sentDateTime = datetime.now()
-		emailSource.save()
 
 	def form_valid(self, form):
 		emailSource = EmailSource()
@@ -96,7 +84,7 @@ class EmailDuplicateView(generic.UpdateView):
 		emailSource.specificData = form.instance.specificData
 		emailSource.save()
 		if 'saveAndSendNow' in self.request.POST:
-			self.send_mail(emailSource)
+			sendEmail(emailSource)
 		return HttpResponseRedirect(self.success_url)
 
 class EmailDeleteView(generic.DeleteView):
