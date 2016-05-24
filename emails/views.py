@@ -78,6 +78,26 @@ class EmailUpdateView(generic.UpdateView):
 
 class EmailDuplicateView(generic.UpdateView):
 	model = EmailSource
+	template_name = 'emails/email_duplicate.html'
+	fields = ['subject', 'template', 'specificData']
+	success_url = '/emails'
+
+	def send_mail(self, emailSource):
+		receiver = emailSource.specificData
+		print("posielam email ------------->>---------- " + receiver)
+		emailSource.sentDateTime = datetime.now()
+		emailSource.save()
+
+	def form_valid(self, form):
+		emailSource = EmailSource()
+		emailSource.user = form.instance.user
+		emailSource.subject = form.instance.subject
+		emailSource.template = form.instance.template
+		emailSource.specificData = form.instance.specificData
+		emailSource.save()
+		if 'saveAndSendNow' in self.request.POST:
+			self.send_mail(emailSource)
+		return HttpResponseRedirect(self.success_url)
 
 class EmailDeleteView(generic.DeleteView):
 	model = EmailSource
