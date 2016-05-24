@@ -9,6 +9,7 @@
 				<a href="{{email.id}}">{{email.subject}}</a>
 				{% if email.sentDateTime %}
 					sent: {{email.sentDateTime}}
+					<a href="{{email.id}}/duplicate">vytvor kopiu</a>
 				{% else %}
 					<a href="{{email.id}}/edit">(uprav)</a>
 					<a href="{{email.id}}/delete">(vymaz)</a>
