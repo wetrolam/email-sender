@@ -9,9 +9,11 @@ from django.core.mail import send_mail
 from .EmailManager import *
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.core.exceptions import PermissionDenied
+from django.contrib import messages
 
 logger = logging.getLogger(__name__)
 
+#avoid access to an email created by a different user
 class EmailOwnerAccessMixin(object):
 	def dispatch(self, request, *args, **kwargs):
 		email = self.get_object()
@@ -19,6 +21,7 @@ class EmailOwnerAccessMixin(object):
 			return super(EmailOwnerAccessMixin, self).dispatch(request, *args, **kwargs)
 		else:
 			raise PermissionDenied
+
 
 class EmailCreateView(generic.edit.CreateView):
 	model = EmailSource
@@ -84,6 +87,15 @@ class EmailUpdateView(EmailOwnerAccessMixin, generic.UpdateView):
 			sendEmail(form.instance)
 		return result
 
+	# a sent email can't be updated
+	def dispatch(self, request, *args, **kwargs):
+		email = self.get_object()
+		if email.isSent():
+			messages.error(request, "You can not update a sent email")
+			raise PermissionDenied
+		else:
+			return super(EmailOwnerAccessMixin, self).dispatch(request, *args, **kwargs)
+
 class EmailDuplicateView(EmailOwnerAccessMixin, generic.UpdateView):
 	model = EmailSource
 	template_name = 'emails/email_duplicate.html'
@@ -105,6 +117,15 @@ class EmailDeleteView(EmailOwnerAccessMixin, generic.DeleteView):
 	model = EmailSource
 	template_name = 'emails/email_delete.html'
 	success_url = '/emails'
+
+	# a sent email can't be deleted
+	def dispatch(self, request, *args, **kwargs):
+		email = self.get_object()
+		if email.isSent():
+			messages.error(request, "You can not delete a sent email")
+			raise PermissionDenied
+		else:
+			return super(EmailOwnerAccessMixin, self).dispatch(request, *args, **kwargs)
 
 class TestView(generic.TemplateView):
 	template_name = 'emails/test.html'
