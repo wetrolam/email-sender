@@ -7,8 +7,18 @@ import logging
 from django.core.urlresolvers import reverse_lazy
 from django.core.mail import send_mail
 from .EmailManager import *
+from django.contrib.auth.mixins import UserPassesTestMixin
+from django.core.exceptions import PermissionDenied
 
 logger = logging.getLogger(__name__)
+
+class EmailOwnerAccessMixin(object):
+	def dispatch(self, request, *args, **kwargs):
+		email = self.get_object()
+		if self.request.user == email.user:
+			return super(EmailOwnerAccessMixin, self).dispatch(request, *args, **kwargs)
+		else:
+			raise PermissionDenied
 
 class EmailCreateView(generic.edit.CreateView):
 	model = EmailSource
@@ -40,7 +50,7 @@ class ListView(generic.ListView):
 		print("vypis zoznam emailov b")
 		return EmailSource.objects.filter(user=self.request.user.id)
 
-class DetailView(generic.DetailView):
+class DetailView(EmailOwnerAccessMixin, generic.DetailView): #UserPassesTestMixin
 	model = EmailSource
 	template_name = 'emails/detail.html'
 	all_emails = EmailSource.objects.all()
@@ -58,7 +68,11 @@ class DetailView(generic.DetailView):
 		#context['all_emails'] = EmailSource.objects.all()
 		# return context
 
-class EmailUpdateView(generic.UpdateView):
+	# def test_func(self):
+	# 	email = self.get_object() #EmailSource.objects.get(id=self.kwargs['pk'])
+	# 	return self.request.user == email.user
+
+class EmailUpdateView(EmailOwnerAccessMixin, generic.UpdateView):
 	model = EmailSource
 	template_name = 'emails/email_update_form.html'
 	fields = ['subject', 'template', 'specificData']
@@ -70,7 +84,7 @@ class EmailUpdateView(generic.UpdateView):
 			sendEmail(form.instance)
 		return result
 
-class EmailDuplicateView(generic.UpdateView):
+class EmailDuplicateView(EmailOwnerAccessMixin, generic.UpdateView):
 	model = EmailSource
 	template_name = 'emails/email_duplicate.html'
 	fields = ['subject', 'template', 'specificData']
@@ -87,7 +101,7 @@ class EmailDuplicateView(generic.UpdateView):
 			sendEmail(emailSource)
 		return HttpResponseRedirect(self.success_url)
 
-class EmailDeleteView(generic.DeleteView):
+class EmailDeleteView(EmailOwnerAccessMixin, generic.DeleteView):
 	model = EmailSource
 	template_name = 'emails/email_delete.html'
 	success_url = '/emails'
