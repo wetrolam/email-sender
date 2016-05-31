@@ -10,6 +10,7 @@ from .EmailManager import *
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.core.exceptions import PermissionDenied
 from django.contrib import messages
+from .forms import EmailSourceForm
 
 logger = logging.getLogger(__name__)
 
@@ -24,18 +25,17 @@ class EmailOwnerAccessMixin(object):
 
 
 class EmailCreateView(generic.edit.CreateView):
-	model = EmailSource
+	#model = EmailSource
+	form_class = EmailSourceForm
 	template_name = 'emails/email_form.html'
-	fields = ['subject', 'template', 'specificData']
+	#fields = ['subject', 'template', 'specificData']
 	success_url = '/emails'
 
 	def form_valid(self, form):
-		logging.debug("email vytvoreny")
-		print("email vytvoreny")
 		form.instance.user = self.request.user
 		result = super(EmailCreateView, self).form_valid(form)
 		if 'saveAndSendNow' in self.request.POST:
-			sendEmail(form.instance)
+			form.sendEmailAndSaveSentTime()
 		return result
 
 def sent(request):
@@ -75,16 +75,16 @@ class DetailView(EmailOwnerAccessMixin, generic.DetailView): #UserPassesTestMixi
 	# 	email = self.get_object() #EmailSource.objects.get(id=self.kwargs['pk'])
 	# 	return self.request.user == email.user
 
-class EmailUpdateView(EmailOwnerAccessMixin, generic.UpdateView):
-	model = EmailSource
+class EmailUpdateView(EmailOwnerAccessMixin, generic.edit.UpdateView):
+	model = EmailSource #needed because self.get_object()
+	form_class = EmailSourceForm
 	template_name = 'emails/email_update_form.html'
-	fields = ['subject', 'template', 'specificData']
 	success_url = '/emails'
 
 	def form_valid(self, form):
 		result = super(EmailUpdateView, self).form_valid(form)
 		if 'saveAndSendNow' in self.request.POST:
-			sendEmail(form.instance)
+			form.sendEmailAndSaveSentTime()
 		return result
 
 	# a sent email can't be updated
@@ -94,12 +94,12 @@ class EmailUpdateView(EmailOwnerAccessMixin, generic.UpdateView):
 			messages.error(request, "You can not update a sent email")
 			raise PermissionDenied
 		else:
-			return super(EmailOwnerAccessMixin, self).dispatch(request, *args, **kwargs)
+			return super(EmailUpdateView, self).dispatch(request, *args, **kwargs)
 
-class EmailDuplicateView(EmailOwnerAccessMixin, generic.UpdateView):
+class EmailDuplicateView(EmailOwnerAccessMixin, generic.edit.UpdateView):
 	model = EmailSource
+	form_class = EmailSourceForm
 	template_name = 'emails/email_duplicate.html'
-	fields = ['subject', 'template', 'specificData']
 	success_url = '/emails'
 
 	def form_valid(self, form):
@@ -110,10 +110,10 @@ class EmailDuplicateView(EmailOwnerAccessMixin, generic.UpdateView):
 		emailSource.specificData = form.instance.specificData
 		emailSource.save()
 		if 'saveAndSendNow' in self.request.POST:
-			sendEmail(emailSource)
+			emailSource.sendEmailAndSaveSentTime()
 		return HttpResponseRedirect(self.success_url)
 
-class EmailDeleteView(EmailOwnerAccessMixin, generic.DeleteView):
+class EmailDeleteView(EmailOwnerAccessMixin, generic.edit.DeleteView):
 	model = EmailSource
 	template_name = 'emails/email_delete.html'
 	success_url = '/emails'
@@ -125,7 +125,7 @@ class EmailDeleteView(EmailOwnerAccessMixin, generic.DeleteView):
 			messages.error(request, "You can not delete a sent email")
 			raise PermissionDenied
 		else:
-			return super(EmailOwnerAccessMixin, self).dispatch(request, *args, **kwargs)
+			return super(EmailDeleteView, self).dispatch(request, *args, **kwargs)
 
 class TestView(generic.TemplateView):
 	template_name = 'emails/test.html'
@@ -145,3 +145,17 @@ class TestHttp(generic.View):
 	def put(self, request):
 		#return HttpResponse("vratene metodou post")
 		return HttpResponseRedirect('/success/')
+
+class TestViewWithForm(generic.edit.CreateView):
+	#model = EmailSource
+	form_class = EmailSourceForm
+	template_name = 'emails/email_form.html'
+	#fields = ['subject', 'template', 'specificData']
+	success_url = '/emails'
+
+	def form_valid(self, form):
+		form.instance.user = self.request.user
+		result = super(TestViewWithForm, self).form_valid(form)
+		if 'saveAndSendNow' in self.request.POST:
+			form.sendEmailAndSaveSentTime()
+		return result

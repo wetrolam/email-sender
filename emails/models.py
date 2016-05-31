@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django import forms
 from django.core.urlresolvers import reverse
+from datetime import datetime
 
 class EmailSource(models.Model):
 	user = models.ForeignKey(User)
@@ -15,3 +16,10 @@ class EmailSource(models.Model):
 
 	# def get_absolute_url(self):
 	# 	return reverse('email-detail', kwargs={'pk': self.pk})
+
+	def sendEmailAndSaveSentTime(self):
+		receiver = self.specificData
+		print("posielam email ------------->>---------- " + receiver)
+		#send_mail('Subject here', 'Here is the message.', 'from@example.com', [receiver], fail_silently=False)
+		self.sentDateTime = datetime.now()
+		self.save()
