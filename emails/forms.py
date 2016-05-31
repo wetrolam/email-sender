@@ -7,7 +7,7 @@ class EmailSourceForm(forms.ModelForm):
 		model = EmailSource
 		fields = ['subject','template', 'specificData']
 
-	#file = forms.FileField(label='scv subor')
+	file = forms.FileField(label='scv subor')
 
 	# def save(self):
 	# 	result = super(EmailSourceForm, self).save(commit=False)

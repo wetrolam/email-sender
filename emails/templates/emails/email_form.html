@@ -1,6 +1,6 @@
-<h1>Poslanie noveho emailu</h1>
+<h1>{{view.heading}}</h1>
 
-<form method="post" action="" id="newEmailForm">
+<form method="post" action="" enctype="multipart/form-data" id="newEmailForm">
     {% csrf_token %}
 
     {{form.as_p}}

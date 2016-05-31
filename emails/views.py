@@ -30,6 +30,7 @@ class EmailCreateView(generic.edit.CreateView):
 	template_name = 'emails/email_form.html'
 	#fields = ['subject', 'template', 'specificData']
 	success_url = '/emails'
+	heading = 'Vytvorenie noveho emailu'
 
 	def form_valid(self, form):
 		form.instance.user = self.request.user
@@ -78,8 +79,9 @@ class DetailView(EmailOwnerAccessMixin, generic.DetailView): #UserPassesTestMixi
 class EmailUpdateView(EmailOwnerAccessMixin, generic.edit.UpdateView):
 	model = EmailSource #needed because self.get_object()
 	form_class = EmailSourceForm
-	template_name = 'emails/email_update_form.html'
+	template_name = 'emails/email_form.html'
 	success_url = '/emails'
+	heading = 'Uprava emailu'
 
 	def form_valid(self, form):
 		result = super(EmailUpdateView, self).form_valid(form)
@@ -99,8 +101,9 @@ class EmailUpdateView(EmailOwnerAccessMixin, generic.edit.UpdateView):
 class EmailDuplicateView(EmailOwnerAccessMixin, generic.edit.UpdateView):
 	model = EmailSource
 	form_class = EmailSourceForm
-	template_name = 'emails/email_duplicate.html'
+	template_name = 'emails/email_form.html'
 	success_url = '/emails'
+	heading = 'Vytvorenie emailu z kopie'
 
 	def form_valid(self, form):
 		emailSource = EmailSource()
