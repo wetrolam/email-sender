@@ -6,11 +6,12 @@ from django.db.models import Q
 import logging
 from django.core.urlresolvers import reverse_lazy
 from django.core.mail import send_mail
-from .EmailManager import *
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.core.exceptions import PermissionDenied
 from django.contrib import messages
 from .forms import EmailSourceForm
+import csv
+from .email_utility import create_emails
 
 logger = logging.getLogger(__name__)
 
@@ -35,8 +36,8 @@ class EmailCreateView(generic.edit.CreateView):
 	def form_valid(self, form):
 		form.instance.user = self.request.user
 		result = super(EmailCreateView, self).form_valid(form)
-		if 'saveAndSendNow' in self.request.POST:
-			form.sendEmailAndSaveSentTime()
+		if 'saveAndConfirm' in self.request.POST:
+			return HttpResponseRedirect('/emails/' + form.instance.id.__str__() + '/confirm')
 		return result
 
 def sent(request):
@@ -85,8 +86,8 @@ class EmailUpdateView(EmailOwnerAccessMixin, generic.edit.UpdateView):
 
 	def form_valid(self, form):
 		result = super(EmailUpdateView, self).form_valid(form)
-		if 'saveAndSendNow' in self.request.POST:
-			form.sendEmailAndSaveSentTime()
+		if 'saveAndConfirm' in self.request.POST:
+			return HttpResponseRedirect('/emails/' + self.kwargs['pk'].__str__() + '/confirm')
 		return result
 
 	# a sent email can't be updated
@@ -112,8 +113,8 @@ class EmailDuplicateView(EmailOwnerAccessMixin, generic.edit.UpdateView):
 		emailSource.template = form.instance.template
 		emailSource.specificData = form.instance.specificData
 		emailSource.save()
-		if 'saveAndSendNow' in self.request.POST:
-			emailSource.sendEmailAndSaveSentTime()
+		if 'saveAndConfirm' in self.request.POST:
+			return HttpResponseRedirect('/emails/' + emailSource.id.__str__() + '/confirm')
 		return HttpResponseRedirect(self.success_url)
 
 class EmailDeleteView(EmailOwnerAccessMixin, generic.edit.DeleteView):
@@ -129,6 +130,34 @@ class EmailDeleteView(EmailOwnerAccessMixin, generic.edit.DeleteView):
 			raise PermissionDenied
 		else:
 			return super(EmailDeleteView, self).dispatch(request, *args, **kwargs)
+
+class SendConfirmView(EmailOwnerAccessMixin, generic.edit.UpdateView):
+	template_name = 'emails/email_send_confirm.html'
+	model = EmailSource
+	fields = []
+
+	def get_context_data(self, **kwargs):
+		context = super(SendConfirmView, self).get_context_data(**kwargs)
+		context['sender'] = self.request.user
+		email = EmailSource.objects.get(pk = self.kwargs['pk'])
+		context['emails'] = create_emails(email.subject, email.template, email.specificData)
+		return context
+
+	def form_valid(self, form):
+		if 'sendNow' in self.request.POST:
+			form.instance.sendEmailAndSaveSentTime()
+			return HttpResponseRedirect('/emails')
+		else:
+			return HttpResponseRedirect('/emails/' + self.kwargs['pk'].__str__() + '/edit')
+
+	# a sent email can't be send again
+	def dispatch(self, request, *args, **kwargs):
+		email = self.get_object()
+		if email.isSent():
+			messages.error(request, "You can not update a sent email")
+			raise PermissionDenied
+		else:
+			return super(SendConfirmView, self).dispatch(request, *args, **kwargs)
 
 class TestView(generic.TemplateView):
 	template_name = 'emails/test.html'

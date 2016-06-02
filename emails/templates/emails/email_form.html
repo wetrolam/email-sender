@@ -1,3 +1,6 @@
+{% load staticfiles %}
+<script src="{% static 'emails/script.js' %}" type="text/javascript"></script>
+
 <h1>{{view.heading}}</h1>
 
 <form method="post" action="" enctype="multipart/form-data" id="newEmailForm">
@@ -5,11 +8,15 @@
 
     {{form.as_p}}
 
+    <p><input type="file" id="fileButton" onchange="loadAndParseFile()"/></p>
+    <p id="fileSize"> tu bude velkost suboru </p>
+    <!-- <p id="fileData"> tu bude obsah suboru </p> -->
+
     {% comment %}
     <input type="text" name="subject"/>
     <p></p>
     {% endcomment %}
-    <input type="submit" name="saveAndSendNow" value="uloz a odosli"/>
+    <input type="submit" name="saveAndConfirm" value="uloz a zobraz presne znenie emailov pre potvrdenie pred odoslanim"/>
     <input type="submit" name="saveOnly" value="uloz"/>
 </form>
 

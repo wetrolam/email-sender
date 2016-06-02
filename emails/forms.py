@@ -1,13 +1,13 @@
 from django import forms
 from .models import EmailSource
-from datetime import datetime
+#from datetime import datetime
 
 class EmailSourceForm(forms.ModelForm):
 	class Meta:
 		model = EmailSource
 		fields = ['subject','template', 'specificData']
 
-	file = forms.FileField(label='scv subor')
+	#specificDataFile = forms.FileField(label='scv subor')
 
 	# def save(self):
 	# 	result = super(EmailSourceForm, self).save(commit=False)

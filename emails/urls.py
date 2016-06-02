@@ -10,6 +10,7 @@ urlpatterns = [
 	url(r'^(?P<pk>[0-9]+)/edit/$', views.EmailUpdateView.as_view()),
 	url(r'^(?P<pk>[0-9]+)/duplicate/$', views.EmailDuplicateView.as_view()),
 	url(r'^(?P<pk>[0-9]+)/delete/$', views.EmailDeleteView.as_view()),
+	url(r'^(?P<pk>[0-9]+)/confirm/$', views.SendConfirmView.as_view()),
 	url(r'^test/(?P<we>\w+)/$', views.TestView.as_view()),
 	url(r'^http/(?P<abcd>\w+)/$', views.TestHttp.as_view()),
 	url(r'^form/$', views.TestViewWithForm.as_view()),

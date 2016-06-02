@@ -1,0 +1,25 @@
+<h1> potvrdenie odoslania emailu </h1>
+
+<form method="post" action="">
+    {% csrf_token %}
+
+    <input type="submit" name="sendNow" value="odosli"/>
+    <input type="submit" name="back" value="spat"/>
+</form>
+
+<p>from: {{sender.email}}</p>
+
+<p><b>emails:</b></p>
+
+<ul>
+    {% for e in emails %}
+    <li>
+        <p>receiver: {{e.receiver}}</p>
+        <p>subject: {{e.subject}}</p>
+        <table><tr>
+            <td valign="top">text:</td>
+            <td style="border: 1px solid gray">{{e.text}}</td>
+        </tr></table>
+    </li>
+    {% endfor %}
+</ul>
