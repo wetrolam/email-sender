@@ -6,7 +6,7 @@ from django.db.models import Q
 import logging
 from django.core.urlresolvers import reverse_lazy
 from django.core.mail import send_mail
-from django.contrib.auth.mixins import UserPassesTestMixin
+from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.contrib import messages
 from .forms import EmailSourceForm
@@ -43,7 +43,7 @@ class EmailCreateView(generic.edit.CreateView):
 def sent(request):
 	return render(request, 'emails/sent.html')
 
-class ListView(generic.ListView):
+class ListView(LoginRequiredMixin, generic.ListView):
 	# model = EmailSource
 	template_name = 'emails/list.html'
 	context_object_name = 'email_list'
