@@ -131,3 +131,5 @@ STATICFILES_DIRS = (os.path.join(WEB_SITE_DIR, 'static'),)
 #EMAIL_HOST = os.environ['EMAIL_HOST']
 #EMAIL_PORT = ast.literal_eval(os.environ('EMAIL_PORT'))
 
+
+LOGIN_REDIRECT_URL = '/emails/'
