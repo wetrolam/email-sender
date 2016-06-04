@@ -5,6 +5,7 @@ from . import views
 urlpatterns = [
 #	url('^', include('django.contrib.auth.urls')),
 	url(r'^login/$', auth_views.login, {'template_name': 'accounts/login.html'}),
-	url(r'^logout/$', auth_views.logout),
+	url(r'^logout/$', auth_views.logout, {'template_name': 'accounts/logout.html'}),
+	url(r'^create/$', views.create_account),
 	url(r'^profile/$', views.profile)
 ]

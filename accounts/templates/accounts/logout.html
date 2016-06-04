@@ -1,1 +1,10 @@
-logout
+{% extends "base_unauthenticated.html" %}
+
+{% block system_menu %}
+    <a href="/accounts/login">Log in</a>
+    <a href="/accounts/create">Create Account</a>
+{% endblock %}
+
+{% block content %}
+    <p>You are logged out</p>
+{% endblock %}
