@@ -29,7 +29,7 @@ class EmailCreateView(generic.edit.CreateView):
 	#model = EmailSource
 	form_class = EmailSourceForm
 	template_name = 'emails/email_form.html'
-	#fields = ['subject', 'template', 'specificData']
+	#fields = ['subject', 'text', 'specificData']
 	success_url = '/emails'
 	heading = 'Vytvorenie noveho emailu'
 
@@ -112,7 +112,7 @@ class EmailDuplicateView(EmailOwnerAccessMixin, generic.edit.UpdateView):
 		emailSource = EmailSource()
 		emailSource.user = form.instance.user
 		emailSource.subject = form.instance.subject
-		emailSource.template = form.instance.template
+		emailSource.text = form.instance.text
 		emailSource.specificData = form.instance.specificData
 		emailSource.save()
 		if 'saveAndConfirm' in self.request.POST:
@@ -143,7 +143,7 @@ class SendConfirmView(EmailOwnerAccessMixin, generic.edit.UpdateView):
 		context = super(SendConfirmView, self).get_context_data(**kwargs)
 		context['sender'] = self.request.user
 		email = EmailSource.objects.get(pk = self.kwargs['pk'])
-		context['emails'] = create_emails(email.subject, email.template, email.specificData)
+		context['emails'] = create_emails(email.subject, email.text, email.specificData)
 		return context
 
 	def form_valid(self, form):
@@ -185,7 +185,7 @@ class TestViewWithForm(generic.edit.CreateView):
 	#model = EmailSource
 	form_class = EmailSourceForm
 	template_name = 'emails/email_form.html'
-	#fields = ['subject', 'template', 'specificData']
+	#fields = ['subject', 'text', 'specificData']
 	success_url = '/emails'
 
 	def form_valid(self, form):

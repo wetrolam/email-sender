@@ -5,7 +5,7 @@ from .models import EmailSource
 class EmailSourceForm(forms.ModelForm):
 	class Meta:
 		model = EmailSource
-		fields = ['subject','template', 'specificData']
+		fields = ['subject','text', 'specificData']
 
 	#specificDataFile = forms.FileField(label='scv subor')
 
