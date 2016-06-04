@@ -1,3 +1,12 @@
-<h1>profil pouzivatela</h1>
+{% extends "base_authenticated.html" %}
 
-{{ username }}
+{% block content %}
+
+    <form method="post" action="">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" name="save" value="save"/>
+    </form>
+
+    <p><a href="">change password</a></p>
+{% endblock %}

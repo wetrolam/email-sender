@@ -8,5 +8,5 @@ urlpatterns = [
 	url(r'^logout/$', auth_views.logout, {'template_name': 'accounts/logout.html'}),
 	#url(r'^logout/$', auth_views.logout_then_login), #, {'template_name': 'accounts/logout.html'}),
 	url(r'^create/$', views.create_account),
-	url(r'^profile/$', views.profile)
+	url(r'^profile/$', views.AccountProfileView.as_view()),
 ]
