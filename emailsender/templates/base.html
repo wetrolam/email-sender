@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+
+{% load staticfiles %}
+
+<html>
+<head>
+    <title>{% block title %} Email Sender {% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" />
+</head>
+<body>
+    <header>
+        <span class="headline">{% block heading%}{% endblock %}</span>
+        <span class="system_menu">{% block system_menu %}  {% endblock %} </span>
+    </header>
+    <div>
+        {% block content %} {% endblock %}
+    </div>
+</body>
+</html>

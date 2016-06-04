@@ -122,6 +122,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+WEB_SITE_DIR = os.path.dirname(__file__)
+STATICFILES_DIRS = (os.path.join(WEB_SITE_DIR, 'static'),)
+
 # email settings
 #EMAIL_BACKEND = os.environ['EMAIL_BACKEND']
 #EMAIL_USE_TLS = ast.literal_eval(os.environ['EMAIL_USE_TLS'])

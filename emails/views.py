@@ -47,6 +47,7 @@ class ListView(LoginRequiredMixin, generic.ListView):
 	# model = EmailSource
 	template_name = 'emails/list.html'
 	context_object_name = 'email_list'
+	heading = 'Zoznam emailov'
 	#queryset = EmailSource.objects.order_by('user')
 	#queryset = EmailSource.objects.filter(user__username='p1')
 
@@ -59,6 +60,7 @@ class DetailView(EmailOwnerAccessMixin, generic.DetailView): #UserPassesTestMixi
 	model = EmailSource
 	template_name = 'emails/detail.html'
 	all_emails = EmailSource.objects.all()
+	heading = 'Detail emailu'
 	#queryset = EmailSource.objects.filter(Q(id=1) | Q(id=2) | Q(id=3) | Q(id=4))
 	#allow_empty = True
 
@@ -121,6 +123,7 @@ class EmailDeleteView(EmailOwnerAccessMixin, generic.edit.DeleteView):
 	model = EmailSource
 	template_name = 'emails/email_delete.html'
 	success_url = '/emails'
+	heading = 'Potvrdenie vymazania emailu emailu'
 
 	# a sent email can't be deleted
 	def dispatch(self, request, *args, **kwargs):

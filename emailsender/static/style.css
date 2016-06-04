@@ -1,0 +1,12 @@
+header {
+    background-color: lightgreen;
+    padding: 10px;
+}
+
+.headline {
+    font-size: 30px;
+}
+
+.system_menu {
+    float: right;
+}

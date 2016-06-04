@@ -1,24 +1,27 @@
-{% load staticfiles %}
-<script src="{% static 'emails/script.js' %}" type="text/javascript"></script>
+{% extends "base_authenticated.html" %}
 
-<h1>{{view.heading}}</h1>
+{% block content %}
 
-<form method="post" action="" enctype="multipart/form-data" id="newEmailForm">
-    {% csrf_token %}
+    {% load staticfiles %}
+    <script src="{% static 'emails/script.js' %}" type="text/javascript"></script>
 
-    {{form.as_p}}
+    <form method="post" action="" enctype="multipart/form-data" id="newEmailForm">
+        {% csrf_token %}
 
-    <p><input type="file" id="fileButton" onchange="loadAndParseFile()"/></p>
-    <p id="fileSize"> tu bude velkost suboru </p>
-    <!-- <p id="fileData"> tu bude obsah suboru </p> -->
+        {{form.as_p}}
 
-    {% comment %}
-    <input type="text" name="subject"/>
-    <p></p>
-    {% endcomment %}
-    <input type="submit" name="saveAndConfirm" value="uloz a zobraz presne znenie emailov pre potvrdenie pred odoslanim"/>
-    <input type="submit" name="saveOnly" value="uloz"/>
-</form>
+        <p><input type="file" id="fileButton" onchange="loadAndParseFile()"/></p>
+        <p id="fileSize"> tu bude velkost suboru </p>
+        <!-- <p id="fileData"> tu bude obsah suboru </p> -->
 
+        {% comment %}
+        <input type="text" name="subject"/>
+        <p></p>
+        {% endcomment %}
+        <input type="submit" name="saveAndConfirm" value="uloz a zobraz presne znenie emailov pre potvrdenie pred odoslanim"/>
+        <input type="submit" name="saveOnly" value="uloz"/>
+    </form>
+
+{% endblock content %}
 
 <!-- <textarea name="template" form="newEmailForm"> text </textarea> -->

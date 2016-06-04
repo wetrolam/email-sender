@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block heading %}
+    {{view.heading}}
+{% endblock %}
+
+{% block system_menu %}
+    <span style="margin:10px;">{{view.request.user.email}}</span>
+    <a href="/accounts/logout/"> Log out</a>
+{% endblock %}

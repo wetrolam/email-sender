@@ -1,19 +1,21 @@
-<p style="background-color:lightgreen"> email detail </p>
+{% extends "base_authenticated.html" %}
 
-<h1>{{object.subject}}</h1>
+{% block content %}
+    <h1>{{object.subject}}</h1>
 
-<p>id = {{object.id}}</p>
+    <p>id = {{object.id}}</p>
 
-<p>subject = {{object.subject}}</p>
+    <p>subject = {{object.subject}}</p>
 
-<p>template = {{object.template}}</p>
+    <p>template = {{object.template}}</p>
 
-<p>poslane = {{object.sentDateTime}}</p>
+    <p>poslane = {{object.sentDateTime}}</p>
 
 
-<b>vsetky maily</b>
-<ul>
-    {% for e in view.all_emails %}
-        <li>{{e.subject}}</li>
-    {% endfor %}
-</ul>
+    <b>vsetky maily</b>
+    <ul>
+        {% for e in view.all_emails %}
+            <li>{{e.subject}}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
