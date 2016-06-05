@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block system_menu %}
-    <a style="margin:10px;" href="/accounts/profile/"> {{view.request.user.email}}</a>
+    {# <a style="margin:10px;" href="/accounts/profile/"> {{view.request.user.email}}</a> #}
+    <a style="margin:10px;" href="/accounts/profile/"> {{user.email}}</a>
     <a href="/accounts/logout/"> Log out</a>
 {% endblock %}
