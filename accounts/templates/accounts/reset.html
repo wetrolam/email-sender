@@ -1,0 +1,18 @@
+{% extends "base_unauthenticated.html" %}
+
+{% block heading %}
+    Enter new password
+{% endblock %}
+
+{% block content %}
+
+    <p>Please enter your new password twice so we can verify you typed it in correctly.</p>
+
+    <form method="post" action="">
+        {% csrf_token %}
+
+        {{form.as_p}}
+
+        <input type="submit" value="Change my password" />
+    </form>
+{% endblock %}
