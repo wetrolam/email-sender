@@ -10,3 +10,7 @@ header {
 .system_menu {
     float: right;
 }
+
+.system_menu_item {
+    margin: 5px;
+}
