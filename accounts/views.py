@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.views import generic
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 
 
 # def profile(request):
@@ -20,5 +21,9 @@ class AccountProfileView(generic.UpdateView):
 
 
 #neprihlaseny
-def create_account(request):
-    return render(request, 'accounts/create.html')
+# def create_account(request):
+#     return render(request, 'accounts/create.html')
+class CreateAccountView(generic.CreateView):
+    form_class = UserCreationForm
+    template_name = 'accounts/create.html'
+    success_url = '/accounts/login/'
