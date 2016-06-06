@@ -2,25 +2,25 @@
 
 {% block content %}
 
-	<p></p><a href="create"> vytvor novy </a></p>
+    <p></p><a href="create"> vytvor novy </a></p>
 
-	{% if email_list %}
-		<ul>
-			{% for email in email_list %}
-				<li>
-					<a href="{{email.id}}">{{email.subject}}</a>
-					{% if email.sentDateTime %}
-						sent: {{email.sentDateTime}}
-						<a href="{{email.id}}/duplicate">vytvor kopiu</a>
-					{% else %}
-						<a href="{{email.id}}/edit">(uprav)</a>
-						<a href="{{email.id}}/delete">(vymaz)</a>
-					{% endif %}
-				</li>
-			{% endfor %}
-		</ul>
-	{% else %}
-		<p>ziadne emaily</p>
-	{% endif %}
+    {% if email_list %}
+        <ul>
+            {% for email in email_list %}
+                <li>
+                    <a href="{{email.id}}">{{email.subject}}</a>
+                    {% if email.sentDateTime %}
+                        sent: {{email.sentDateTime}}
+                        <a href="{{email.id}}/duplicate">vytvor kopiu</a>
+                    {% else %}
+                        <a href="{{email.id}}/edit">(uprav)</a>
+                        <a href="{{email.id}}/delete">(vymaz)</a>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>ziadne emaily</p>
+    {% endif %}
 
 {% endblock %}

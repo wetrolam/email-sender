@@ -6,10 +6,10 @@ from django import forms
 
 
 class EmailSourceAdmin(admin.ModelAdmin):
-	# fieldsets = [
-	# 	('predmet', {'fields': [ 'subject']}),
-	# 	(None,      {'fields': [ 'template']}),
-	# ]
-	list_display = ( 'subject', 'user',)
+    #fieldsets = [
+        #('predmet', {'fields': [ 'subject']}),
+        #(None,      {'fields': [ 'template']}),
+    #]
+    list_display = ( 'subject', 'user',)
 
 admin.site.register(EmailSource, EmailSourceAdmin)
