@@ -3,8 +3,8 @@
 <form method="post" action="">
     {% csrf_token %}
 
-    <input type="submit" name="sendNow" value="odosli"/>
-    <input type="submit" name="back" value="spat"/>
+    <input type="submit" name="sendNow" value="Send"/>
+    <input type="submit" name="back" value="Back"/>
 </form>
 
 <p>from: {{sender.email}}</p>

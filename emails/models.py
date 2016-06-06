@@ -23,7 +23,7 @@ class EmailSource(models.Model):
 
     def sendEmailAndSaveSentTime(self):
         sender = self.user.email
-        print("---- posielam emaily od " + sender + " ----")
+        print("---- sending emails from " + sender + " ----")
         emails = create_emails(self.subject, self.text, self.specificData)
         for e in emails:
             print("    -> " + e.receiver)

@@ -31,7 +31,7 @@ class EmailCreateView(generic.edit.CreateView):
     template_name = 'emails/email_form.html'
     #fields = ['subject', 'text', 'specificData']
     success_url = '/emails'
-    heading = 'Vytvorenie noveho emailu'
+    heading = 'Create a new email'
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -47,7 +47,7 @@ class ListView(LoginRequiredMixin, generic.ListView):
     # model = EmailSource
     template_name = 'emails/list.html'
     context_object_name = 'email_list'
-    heading = 'Zoznam emailov'
+    heading = 'List of all emails'
     #queryset = EmailSource.objects.order_by('user')
     #queryset = EmailSource.objects.filter(user__username='p1')
 
@@ -60,7 +60,7 @@ class DetailView(EmailOwnerAccessMixin, generic.DetailView): #UserPassesTestMixi
     model = EmailSource
     template_name = 'emails/detail.html'
     all_emails = EmailSource.objects.all()
-    heading = 'Detail emailu'
+    heading = "Email's details"
     #queryset = EmailSource.objects.filter(Q(id=1) | Q(id=2) | Q(id=3) | Q(id=4))
     #allow_empty = True
 
@@ -84,7 +84,7 @@ class EmailUpdateView(EmailOwnerAccessMixin, generic.edit.UpdateView):
     form_class = EmailSourceForm
     template_name = 'emails/email_form.html'
     success_url = '/emails'
-    heading = 'Uprava emailu'
+    heading = 'Edit email'
 
     def form_valid(self, form):
         result = super(EmailUpdateView, self).form_valid(form)
@@ -106,7 +106,7 @@ class EmailDuplicateView(EmailOwnerAccessMixin, generic.edit.UpdateView):
     form_class = EmailSourceForm
     template_name = 'emails/email_form.html'
     success_url = '/emails'
-    heading = 'Vytvorenie emailu z kopie'
+    heading = 'Create an email copy'
 
     def form_valid(self, form):
         emailSource = EmailSource()
@@ -123,7 +123,7 @@ class EmailDeleteView(EmailOwnerAccessMixin, generic.edit.DeleteView):
     model = EmailSource
     template_name = 'emails/email_delete.html'
     success_url = '/emails'
-    heading = 'Potvrdenie vymazania emailu emailu'
+    heading = 'Delete email confirmation'
 
     # a sent email can't be deleted
     def dispatch(self, request, *args, **kwargs):
