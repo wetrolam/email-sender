@@ -27,7 +27,7 @@ class EmailSource(models.Model):
 		emails = create_emails(self.subject, self.text, self.specificData)
 		for e in emails:
 			print("    -> " + e.receiver)
-			#send_mail(e.subject, e.text, sender, [e.receiver], fail_silently=False)
+			send_mail(e.subject, e.text, sender, [e.receiver], fail_silently=False)
 			#send_mail('Subject here', 'Here is the message.', 'from@example.com', [receiver], fail_silently=False)
 		self.sentDateTime = datetime.now()
 		self.save()
