@@ -28,7 +28,7 @@ class EmailOwnerAccessMixin(object):
 class EmailCreateView(generic.edit.CreateView):
     #model = EmailSource
     form_class = EmailSourceForm
-    template_name = 'emails/email_form.html'
+    template_name = 'emails/edit.html'
     #fields = ['subject', 'text', 'specificData']
     success_url = '/emails'
     heading = 'Create a new email'
@@ -82,7 +82,7 @@ class DetailView(EmailOwnerAccessMixin, generic.DetailView): #UserPassesTestMixi
 class EmailUpdateView(EmailOwnerAccessMixin, generic.edit.UpdateView):
     model = EmailSource #needed because self.get_object()
     form_class = EmailSourceForm
-    template_name = 'emails/email_form.html'
+    template_name = 'emails/edit.html'
     success_url = '/emails'
     heading = 'Edit email'
 
@@ -104,7 +104,7 @@ class EmailUpdateView(EmailOwnerAccessMixin, generic.edit.UpdateView):
 class EmailDuplicateView(EmailOwnerAccessMixin, generic.edit.UpdateView):
     model = EmailSource
     form_class = EmailSourceForm
-    template_name = 'emails/email_form.html'
+    template_name = 'emails/edit.html'
     success_url = '/emails'
     heading = 'Create an email copy'
 
@@ -121,7 +121,7 @@ class EmailDuplicateView(EmailOwnerAccessMixin, generic.edit.UpdateView):
 
 class EmailDeleteView(EmailOwnerAccessMixin, generic.edit.DeleteView):
     model = EmailSource
-    template_name = 'emails/email_delete.html'
+    template_name = 'emails/delete.html'
     success_url = '/emails'
     heading = 'Delete email confirmation'
 
@@ -135,7 +135,7 @@ class EmailDeleteView(EmailOwnerAccessMixin, generic.edit.DeleteView):
             return super(EmailDeleteView, self).dispatch(request, *args, **kwargs)
 
 class SendConfirmView(EmailOwnerAccessMixin, generic.edit.UpdateView):
-    template_name = 'emails/email_send_confirm.html'
+    template_name = 'emails/send_confirm.html'
     model = EmailSource
     fields = []
 
@@ -184,7 +184,7 @@ class TestHttp(generic.View):
 class TestViewWithForm(generic.edit.CreateView):
     #model = EmailSource
     form_class = EmailSourceForm
-    template_name = 'emails/email_form.html'
+    template_name = 'emails/edit.html'
     #fields = ['subject', 'text', 'specificData']
     success_url = '/emails'
 
