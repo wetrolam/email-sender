@@ -18,3 +18,7 @@ header {
 .wide {
     width: 100%;
 }
+
+.errorlist {
+    color: red;
+}
