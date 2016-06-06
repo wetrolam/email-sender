@@ -1,5 +1,7 @@
 {% extends "base_authenticated.html" %}
 
+{% load email_sender_tags %}
+
 {% block content %}
 
     {% load staticfiles %}
@@ -8,9 +10,25 @@
     <form method="post" action="" enctype="multipart/form-data" id="newEmailForm">
         {% csrf_token %}
 
-        {{form.as_p}}
+        <p></p>
 
-        <p><input type="file" id="fileButton" onchange="loadAndParseFile()"/></p>
+        <div>{{form.subject.label}}:</div>
+        <div>{{form.subject.errors}}</div>
+        <div>{{form.subject|addclass:"wide"}}</div>
+
+        <p></p>
+
+        <div>{{form.text.label}}:</div>
+        <div>{{form.text.errors}}</div>
+        <div>{{form.text|addclass:"wide"}}</div>
+
+        <p></p>
+
+        <div>{{form.specificData.label}}:</div>
+        <div>{{form.specificData.errors}}</div>                  {#<div>{{form.errors.specificData}}</div>#}
+        <div>{{form.specificData|addclass:"wide"}}</div>
+
+        <div><input type="file" id="fileButton" onchange="loadAndParseFile()"/></div>
         <p id="fileSize"> tu bude velkost suboru </p>
         <!-- <p id="fileData"> tu bude obsah suboru </p> -->
 
@@ -22,6 +40,7 @@
         <input type="submit" name="saveOnly" value="Save"/>
     </form>
 
+{{form}}
 {% endblock content %}
 
 <!-- <textarea name="template" form="newEmailForm"> text </textarea> -->

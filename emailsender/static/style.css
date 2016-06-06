@@ -14,3 +14,7 @@ header {
 .system_menu_item {
     margin: 5px;
 }
+
+.wide {
+    width: 100%;
+}
