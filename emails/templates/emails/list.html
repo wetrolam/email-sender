@@ -2,23 +2,36 @@
 
 {% block content %}
 
+    <style>
+        table tr:nth-child(even) {
+            background-color: #eee;
+        }
+        table tr:nth-child(odd) {
+           background-color:#fff;
+        }
+    </style>
+
     <p></p><a href="create"> Create new </a></p>
 
     {% if email_list %}
-        <ul>
+        <table>
             {% for email in email_list %}
-                <li>
-                    <a href="{{email.id}}">{{email.subject}}</a>
+                <tr>
+                    <td>
+                        <a href="{{email.id}}">{{email.subject}}</a>
+                    </td>
                     {% if email.sentDateTime %}
-                        sent: {{email.sentDateTime}}
-                        <a href="{{email.id}}/duplicate">Create copy</a>
+                        <td><a href="{{email.id}}/duplicate">Create copy</a></td>
+                        <td>sent: {{email.sentDateTime}}</td>
                     {% else %}
-                        <a href="{{email.id}}/edit">(Edit)</a>
-                        <a href="{{email.id}}/delete">(Delete)</a>
+                        <td>
+                            <a href="{{email.id}}/edit">(Edit)</a>
+                            <a href="{{email.id}}/delete">(Delete)</a>
+                        </td>
                     {% endif %}
-                </li>
+                </tr>
             {% endfor %}
-        </ul>
+        </table>
     {% else %}
         <p>no emails</p>
     {% endif %}
