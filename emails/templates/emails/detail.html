@@ -1,21 +1,40 @@
 {% extends "base_authenticated.html" %}
 
 {% block content %}
-    <h1>{{object.subject}}</h1>
 
-    <p>id = {{object.id}}</p>
+    <table>
+        <tr valign="top">
+            <td>
+                <p></p>
 
-    <p>subject = {{object.subject}}</p>
+                <div><u>Subject:</u></div>
+                <div>{{object.subject}}</div>
 
-    <p>template = {{object.template}}</p>
+                <p></p>
 
-    <p>poslane = {{object.sentDateTime}}</p>
+                <div><u>Text:</u></div>
+                <div>{{object.text}}</div>
 
+                <p></p>
 
-    <b>vsetky maily</b>
-    <ul>
-        {% for e in view.all_emails %}
-            <li>{{e.subject}}</li>
-        {% endfor %}
-    </ul>
+                <div><u>Specific data:</u></div>
+                <div>{{object.specificData}}</div>
+
+                <p></p>
+
+                <div><u>Sent time:</u></div>
+                <div>{{object.sentDateTime}}</div>
+
+                <p></p>
+            </td>
+            <td>
+                <b>all emails:</b>
+                <ul>
+                    {% for e in view.all_emails %}
+                        <li>{{e.subject}}</li>
+                    {% endfor %}
+                </ul>
+            </td>
+        </tr>
+    </table>
 {% endblock %}
