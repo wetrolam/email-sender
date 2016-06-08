@@ -58,7 +58,7 @@ ROOT_URLCONF = 'emailsender.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['emailsender/templates', 'accounts/templates', 'emails/templates'],
+        'DIRS': [os.path.join(BASE_DIR,'emailsender/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
