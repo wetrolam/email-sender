@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'accounts.apps.AccountsConfig',
     'emails.apps.EmailsConfig',
     'anymail',
     'django.contrib.admin',
